@@ -7559,7 +7559,7 @@ function namedKey(style) {
     var minLine = Infinity, ranges = this.listSelections(), mode = null;
     for (var i = ranges.length - 1; i >= 0; i--) {
       var from = ranges[i].from(), to = ranges[i].to();
-      if (from.line >= minLine) continue;
+      if (from.line >= minLine) break;
       if (to.line >= minLine) to = Pos(minLine, 0);
       minLine = from.line;
       if (mode == null) {
@@ -7614,7 +7614,7 @@ function namedKey(style) {
         }
         for (var i = from.line; i < end; ++i) {
           var line = self.getLine(i), cut = baseString.length;
-          if (!blankLines && !nonWS.test(line)) continue;
+          if (!blankLines && !nonWS.test(line)) break;
           if (line.slice(0, cut) != baseString) cut = firstNonWS(line);
           self.replaceRange(baseString + commentString + pad, Pos(i, 0), Pos(i, cut));
         }
@@ -7683,7 +7683,7 @@ function namedKey(style) {
         for (var i = start; i <= end; ++i) {
           var line = lines[i - start];
           var pos = line.indexOf(lineString), endPos = pos + lineString.length;
-          if (pos < 0) continue;
+          if (pos < 0) break;
           if (line.slice(endPos, endPos + pad.length) == pad) endPos += pad.length;
           didSomething = true;
           self.replaceRange("", Pos(i, pos), Pos(i, endPos));
@@ -7731,7 +7731,7 @@ function namedKey(style) {
       self.replaceRange("", Pos(start, open), Pos(start, openEnd));
       if (lead) for (var i = start + 1; i <= end; ++i) {
         var line = self.getLine(i), found = line.indexOf(lead);
-        if (found == -1 || nonWS.test(line.slice(0, found))) continue;
+        if (found == -1 || nonWS.test(line.slice(0, found))) break;
         var foundEnd = found + lead.length;
         if (pad && line.slice(foundEnd, foundEnd + pad.length) == pad) foundEnd += pad.length;
         self.replaceRange("", Pos(i, found), Pos(i, foundEnd));
@@ -8163,9 +8163,9 @@ function namedKey(style) {
                           : Math.max(cm.firstLine() - 1, where.line - maxScanLines);
     for (var lineNo = where.line; lineNo != lineEnd; lineNo += dir) {
       var line = cm.getLine(lineNo);
-      if (!line) continue;
+      if (!line) break;
       var pos = dir > 0 ? 0 : line.length - 1, end = dir > 0 ? line.length : -1;
-      if (line.length > maxScanLen) continue;
+      if (line.length > maxScanLen) break;
       if (lineNo == where.line) pos = where.ch - (dir < 0 ? 1 : 0);
       for (; pos != end; pos += dir) {
         var ch = line.charAt(pos);
@@ -8271,7 +8271,7 @@ CodeMirror.registerHelper("fold", "brace", function(cm, start) {
         if (pass == 1) break;
         pass = 1;
         at = lineText.length;
-        continue;
+        break;
       }
       if (pass == 1 && found < start.ch) break;
       tokenType = cm.getTokenTypeAt(CodeMirror.Pos(line, found + 1));
@@ -9253,7 +9253,7 @@ CodeMirror.registerHelper("fold", "include", function(cm, start) {
 
     for (var line = 0; line < annotations.length; ++line) {
       var anns = annotations[line];
-      if (!anns) continue;
+      if (!anns) break;
 
       var maxSeverity = null;
       var tipLabel = state.hasGutter && document.createDocumentFragment();
@@ -9971,7 +9971,7 @@ CodeMirror.registerHelper("fold", "include", function(cm, start) {
       } else if (state == "in") {
         if (type != cat) {
           if (type == "w" && cat == "W" && dir < 0) pos--;
-          if (type == "W" && cat == "w" && dir > 0) { type = "w"; continue; }
+          if (type == "W" && cat == "w" && dir > 0) { type = "w"; break; }
           break;
         }
       }
@@ -10053,7 +10053,7 @@ CodeMirror.registerHelper("fold", "include", function(cm, start) {
       var len = cm.listSelections().length, newSelection = [], last = -1;
       for (var i = 0; i < len; i++) {
         var head = cm.listSelections()[i].head;
-        if (head.line <= last) continue;
+        if (head.line <= last) break;
         var at = Pos(head.line + (above ? 0 : 1), 0);
         cm.replaceRange("\n", at, null, "+insertLine");
         cm.indentLine(at.line, null, true);
@@ -10250,7 +10250,7 @@ CodeMirror.registerHelper("fold", "include", function(cm, start) {
     var ranges = cm.listSelections(), toSort = [], selected;
     for (var i = 0; i < ranges.length; i++) {
       var range = ranges[i];
-      if (range.empty()) continue;
+      if (range.empty()) break;
       var from = range.from().line, to = range.to().line;
       while (i < ranges.length - 1 && ranges[i + 1].from().line == to)
         to = ranges[++i].to().line;
@@ -10362,7 +10362,7 @@ CodeMirror.registerHelper("fold", "include", function(cm, start) {
       cm.replaceSelections(replacements, "around", "case");
       for (var i = indices.length - 1, at; i >= 0; i--) {
         var range = ranges[indices[i]];
-        if (at && CodeMirror.cmpPos(range.head, at) > 0) continue;
+        if (at && CodeMirror.cmpPos(range.head, at) > 0) break;
         var word = wordAt(cm, range.head);
         at = word.from;
         cm.replaceRange(mod(word.word), word.from, word.to);
@@ -20043,7 +20043,7 @@ return CodeMirror$1;
  * LICENSE file in the root directory of this source tree. An additional grant
  * of patent rights can be found in the PATENTS file in the same directory.
  *
- * 
+ *
  */
 
 function makeEmptyFunction(arg) {
@@ -20225,7 +20225,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                                                                                                                                                            *  This source code is licensed under the license found in the
                                                                                                                                                            *  LICENSE file in the root directory of this source tree.
                                                                                                                                                            *
-                                                                                                                                                           *  
+                                                                                                                                                           *
                                                                                                                                                            */
 
 var GraphQLLanguageService = exports.GraphQLLanguageService = function () {
@@ -20474,7 +20474,7 @@ function getDefinitionState(tokenState) {
  *  This source code is licensed under the license found in the
  *  LICENSE file in the root directory of this source tree.
  *
- *  
+ *
  */
 
 function getFieldDef(schema, type, fieldName) {
@@ -20634,7 +20634,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    *  This source code is licensed under the license found in the
                                                                                                                                                                                                                                                                    *  LICENSE file in the root directory of this source tree.
                                                                                                                                                                                                                                                                    *
-                                                                                                                                                                                                                                                                   *  
+                                                                                                                                                                                                                                                                   *
                                                                                                                                                                                                                                                                    */
 
 exports.getAutocompleteSuggestions = getAutocompleteSuggestions;
@@ -21180,7 +21180,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  This source code is licensed under the license found in the
  *  LICENSE file in the root directory of this source tree.
  *
- *  
+ *
  */
 
 var LANGUAGE = exports.LANGUAGE = 'GraphQL';
@@ -21288,7 +21288,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  *  This source code is licensed under the license found in the
  *  LICENSE file in the root directory of this source tree.
  *
- *  
+ *
  */
 
 var SEVERITY = exports.SEVERITY = {
@@ -21412,7 +21412,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    *  This source code is licensed under the license found in the
                                                                                                                                                                                                                                                                    *  LICENSE file in the root directory of this source tree.
                                                                                                                                                                                                                                                                    *
-                                                                                                                                                                                                                                                                   *  
+                                                                                                                                                                                                                                                                   *
                                                                                                                                                                                                                                                                    */
 
 exports.getOutline = getOutline;
@@ -21786,7 +21786,7 @@ var CharacterStream = function () {
       *  This source code is licensed under the license found in the
       *  LICENSE file in the root directory of this source tree.
       *
-      *  
+      *
       */
 
 /**
@@ -21827,7 +21827,7 @@ function opt(ofRule) {
  *  This source code is licensed under the license found in the
  *  LICENSE file in the root directory of this source tree.
  *
- *  
+ *
  */
 
 // These functions help build matching rules for ParseRules.
@@ -21887,7 +21887,7 @@ var _RuleHelpers = require('./RuleHelpers');
  *  This source code is licensed under the license found in the
  *  LICENSE file in the root directory of this source tree.
  *
- *  
+ *
  */
 
 var isIgnored = exports.isIgnored = function isIgnored(ch) {
@@ -22176,7 +22176,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
                                                                                                                                                                                                                                                                    *  This source code is licensed under the license found in the
                                                                                                                                                                                                                                                                    *  LICENSE file in the root directory of this source tree.
                                                                                                                                                                                                                                                                    *
-                                                                                                                                                                                                                                                                   *  
+                                                                                                                                                                                                                                                                   *
                                                                                                                                                                                                                                                                    */
 
 /**
@@ -22314,7 +22314,7 @@ function getToken(stream, state, options) {
       // A string represents a Rule
       if (typeof expected === 'string') {
         pushRule(parseRules, state, expected);
-        continue;
+        break;
       }
 
       // Otherwise, match a Terminal.
@@ -22477,7 +22477,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
  *  This source code is licensed under the license found in the
  *  LICENSE file in the root directory of this source tree.
  *
- *  
+ *
  */
 
 var Range = exports.Range = function () {
@@ -22588,7 +22588,7 @@ function getASTNodeAtPosition(query, ast, point) {
    *  This source code is licensed under the license found in the
    *  LICENSE file in the root directory of this source tree.
    *
-   *  
+   *
    */
 
 function pointToOffset(text, point) {
@@ -22700,7 +22700,7 @@ function validateWithCustomRules(schema, ast, customRules) {
    *  This source code is licensed under the license found in the
    *  LICENSE file in the root directory of this source tree.
    *
-   *  
+   *
    */
 },{"graphql":94,"graphql/validation/rules/NoUnusedFragments":151}],85:[function(require,module,exports){
 'use strict';
@@ -23324,7 +23324,7 @@ function collectFields(exeContext, runtimeType, selectionSet, fields, visitedFra
     switch (selection.kind) {
       case Kind.FIELD:
         if (!shouldIncludeNode(exeContext, selection)) {
-          continue;
+          break;
         }
         var _name = getFieldEntryKey(selection);
         if (!fields[_name]) {
@@ -23334,19 +23334,19 @@ function collectFields(exeContext, runtimeType, selectionSet, fields, visitedFra
         break;
       case Kind.INLINE_FRAGMENT:
         if (!shouldIncludeNode(exeContext, selection) || !doesFragmentConditionMatch(exeContext, selection, runtimeType)) {
-          continue;
+          break;
         }
         collectFields(exeContext, runtimeType, selection.selectionSet, fields, visitedFragmentNames);
         break;
       case Kind.FRAGMENT_SPREAD:
         var fragName = selection.name.value;
         if (visitedFragmentNames[fragName] || !shouldIncludeNode(exeContext, selection)) {
-          continue;
+          break;
         }
         visitedFragmentNames[fragName] = true;
         var fragment = exeContext.fragments[fragName];
         if (!fragment || !doesFragmentConditionMatch(exeContext, fragment, runtimeType)) {
-          continue;
+          break;
         }
         collectFields(exeContext, runtimeType, fragment.selectionSet, fields, visitedFragmentNames);
         break;
@@ -24078,7 +24078,7 @@ function coerceValue(type, value) {
         } else if (field.type instanceof _definition.GraphQLNonNull) {
           return; // Intentionally return no value.
         }
-        continue;
+        break;
       }
       var fieldValue = coerceValue(field.type, _value[fieldName]);
       if ((0, _isInvalid2.default)(fieldValue)) {
@@ -27537,7 +27537,7 @@ function visit(root, visitor, keyMap) {
       key = parent ? inArray ? index : keys[index] : undefined;
       node = parent ? parent[key] : newRoot;
       if (node === null || node === undefined) {
-        continue;
+        break;
       }
       if (parent) {
         path.push(key);
@@ -27560,7 +27560,7 @@ function visit(root, visitor, keyMap) {
         if (result === false) {
           if (!isLeaving) {
             path.pop();
-            continue;
+            break;
           }
         } else if (result !== undefined) {
           edits.push([key, result]);
@@ -27569,7 +27569,7 @@ function visit(root, visitor, keyMap) {
               node = result;
             } else {
               path.pop();
-              continue;
+              break;
             }
           }
         }
@@ -27753,7 +27753,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    * LICENSE file in the root directory of this source tree. An additional grant
                                                                                                                                                                                                                    * of patent rights can be found in the PATENTS file in the same directory.
                                                                                                                                                                                                                    *
-                                                                                                                                                                                                                   * 
+                                                                                                                                                                                                                   *
                                                                                                                                                                                                                    */
 
 /**
@@ -27855,7 +27855,7 @@ function subscribe(argsOrSchema, document, rootValue, contextValue, variableValu
    * LICENSE file in the root directory of this source tree. An additional grant
    * of patent rights can be found in the PATENTS file in the same directory.
    *
-   * 
+   *
    */
 
 function subscribeImpl(schema, document, rootValue, contextValue, variableValues, operationName, fieldResolver, subscribeFieldResolver) {
@@ -33531,7 +33531,7 @@ function valueFromAST(valueNode, type, variables) {
         } else if (field.type instanceof _definition.GraphQLNonNull) {
           return; // Invalid: intentionally return no value.
         }
-        continue;
+        break;
       }
       var fieldValue = valueFromAST(fieldNode.value, field.type, variables);
       if ((0, _isInvalid2.default)(fieldValue)) {
@@ -37212,7 +37212,7 @@ Lexer.prototype.token = function(src, top, bq) {
           ? cap.replace(/\n+$/, '')
           : cap
       });
-      continue;
+      break;
     }
 
     // fences (gfm)
@@ -37223,7 +37223,7 @@ Lexer.prototype.token = function(src, top, bq) {
         lang: cap[2],
         text: cap[3] || ''
       });
-      continue;
+      break;
     }
 
     // heading
@@ -37234,7 +37234,7 @@ Lexer.prototype.token = function(src, top, bq) {
         depth: cap[1].length,
         text: cap[2]
       });
-      continue;
+      break;
     }
 
     // table no leading pipe (gfm)
@@ -37266,7 +37266,7 @@ Lexer.prototype.token = function(src, top, bq) {
 
       this.tokens.push(item);
 
-      continue;
+      break;
     }
 
     // lheading
@@ -37277,7 +37277,7 @@ Lexer.prototype.token = function(src, top, bq) {
         depth: cap[2] === '=' ? 1 : 2,
         text: cap[1]
       });
-      continue;
+      break;
     }
 
     // hr
@@ -37286,7 +37286,7 @@ Lexer.prototype.token = function(src, top, bq) {
       this.tokens.push({
         type: 'hr'
       });
-      continue;
+      break;
     }
 
     // blockquote
@@ -37308,7 +37308,7 @@ Lexer.prototype.token = function(src, top, bq) {
         type: 'blockquote_end'
       });
 
-      continue;
+      break;
     }
 
     // list
@@ -37382,7 +37382,7 @@ Lexer.prototype.token = function(src, top, bq) {
         type: 'list_end'
       });
 
-      continue;
+      break;
     }
 
     // html
@@ -37396,7 +37396,7 @@ Lexer.prototype.token = function(src, top, bq) {
           && (cap[1] === 'pre' || cap[1] === 'script' || cap[1] === 'style'),
         text: cap[0]
       });
-      continue;
+      break;
     }
 
     // def
@@ -37406,7 +37406,7 @@ Lexer.prototype.token = function(src, top, bq) {
         href: cap[2],
         title: cap[3]
       };
-      continue;
+      break;
     }
 
     // table (gfm)
@@ -37440,7 +37440,7 @@ Lexer.prototype.token = function(src, top, bq) {
 
       this.tokens.push(item);
 
-      continue;
+      break;
     }
 
     // top-level paragraph
@@ -37452,7 +37452,7 @@ Lexer.prototype.token = function(src, top, bq) {
           ? cap[1].slice(0, -1)
           : cap[1]
       });
-      continue;
+      break;
     }
 
     // text
@@ -37463,7 +37463,7 @@ Lexer.prototype.token = function(src, top, bq) {
         type: 'text',
         text: cap[0]
       });
-      continue;
+      break;
     }
 
     if (src) {
@@ -37603,7 +37603,7 @@ InlineLexer.prototype.output = function(src) {
     if (cap = this.rules.escape.exec(src)) {
       src = src.substring(cap[0].length);
       out += cap[1];
-      continue;
+      break;
     }
 
     // autolink
@@ -37619,7 +37619,7 @@ InlineLexer.prototype.output = function(src) {
         href = text;
       }
       out += this.renderer.link(href, null, text);
-      continue;
+      break;
     }
 
     // url (gfm)
@@ -37628,7 +37628,7 @@ InlineLexer.prototype.output = function(src) {
       text = escape(cap[1]);
       href = text;
       out += this.renderer.link(href, null, text);
-      continue;
+      break;
     }
 
     // tag
@@ -37644,7 +37644,7 @@ InlineLexer.prototype.output = function(src) {
           ? this.options.sanitizer(cap[0])
           : escape(cap[0])
         : cap[0]
-      continue;
+      break;
     }
 
     // link
@@ -37656,7 +37656,7 @@ InlineLexer.prototype.output = function(src) {
         title: cap[3]
       });
       this.inLink = false;
-      continue;
+      break;
     }
 
     // reflink, nolink
@@ -37668,54 +37668,54 @@ InlineLexer.prototype.output = function(src) {
       if (!link || !link.href) {
         out += cap[0].charAt(0);
         src = cap[0].substring(1) + src;
-        continue;
+        break;
       }
       this.inLink = true;
       out += this.outputLink(cap, link);
       this.inLink = false;
-      continue;
+      break;
     }
 
     // strong
     if (cap = this.rules.strong.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.strong(this.output(cap[2] || cap[1]));
-      continue;
+      break;
     }
 
     // em
     if (cap = this.rules.em.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.em(this.output(cap[2] || cap[1]));
-      continue;
+      break;
     }
 
     // code
     if (cap = this.rules.code.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.codespan(escape(cap[2], true));
-      continue;
+      break;
     }
 
     // br
     if (cap = this.rules.br.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.br();
-      continue;
+      break;
     }
 
     // del (gfm)
     if (cap = this.rules.del.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.del(this.output(cap[1]));
-      continue;
+      break;
     }
 
     // text
     if (cap = this.rules.text.exec(src)) {
       src = src.substring(cap[0].length);
       out += this.renderer.text(escape(this.smartypants(cap[0])));
-      continue;
+      break;
     }
 
     if (src) {
@@ -38126,7 +38126,7 @@ function escape(html, encode) {
 }
 
 function unescape(html) {
-	// explicitly match decimal, hex, and named HTML entities 
+	// explicitly match decimal, hex, and named HTML entities
   return html.replace(/&(#(?:\d+)|(?:#x[0-9A-Fa-f]+)|(?:\w+));?/g, function(_, n) {
     n = n.toLowerCase();
     if (n === 'colon') return ':';
@@ -38982,7 +38982,7 @@ module.exports = function(isValidElement, throwOnDirectAccess) {
       for (var key in shapeTypes) {
         var checker = shapeTypes[key];
         if (!checker) {
-          continue;
+          break;
         }
         var error = checker(propValue, key, componentName, location, propFullName + '.' + key, ReactPropTypesSecret);
         if (error) {
