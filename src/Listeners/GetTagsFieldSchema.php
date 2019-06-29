@@ -53,7 +53,7 @@ class GetTagsFieldSchema
 
                     foreach ($values as &$value) {
                         if (is_numeric($value)) {
-                            continue;
+                            break;
                         }
 
                         if (empty($value['slug'])) {

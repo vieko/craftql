@@ -66,7 +66,7 @@ class GetCategoriesFieldSchema
                     foreach ($values as &$value) {
                         if (!empty($value['id']) && is_numeric($value['id'])) {
                             $value = $value['id'];
-                            continue;
+                            break;
                         }
 
                         if (empty($value['slug'])) {
