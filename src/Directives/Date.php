@@ -22,7 +22,7 @@ class Date {
             'name' => 'date',
             'description' => 'Transform Timestamp types into string representations',
             'locations' => [
-                DirectiveLocation::FIELD,
+                DirectiveLocation::FIELD_DEFINITION,
             ],
             'args' => [
                 new FieldArgument([
