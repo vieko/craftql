@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "47f95754c91e9521069196f46045e0d4",
+    "content-hash": "6b8119d2c3970f04fd5ec0f84eb959c2",
     "packages": [
         {
             "name": "cebe/markdown",
@@ -3075,16 +3075,16 @@
         },
         {
             "name": "webonyx/graphql-php",
-            "version": "v0.12.6",
+            "version": "v0.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/webonyx/graphql-php.git",
-                "reference": "4c545e5ec4fc37f6eb36c19f5a0e7feaf5979c95"
+                "reference": "01e084a9eebc94e1ec4c8b6d8d74ea3d0a9026f2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/4c545e5ec4fc37f6eb36c19f5a0e7feaf5979c95",
-                "reference": "4c545e5ec4fc37f6eb36c19f5a0e7feaf5979c95",
+                "url": "https://api.github.com/repos/webonyx/graphql-php/zipball/01e084a9eebc94e1ec4c8b6d8d74ea3d0a9026f2",
+                "reference": "01e084a9eebc94e1ec4c8b6d8d74ea3d0a9026f2",
                 "shasum": ""
             },
             "require": {
@@ -3093,8 +3093,7 @@
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8",
-                "psr/http-message": "^1.0",
-                "react/promise": "2.*"
+                "psr/http-message": "^1.0"
             },
             "suggest": {
                 "psr/http-message": "To use standard GraphQL server",
@@ -3116,7 +3115,7 @@
                 "api",
                 "graphql"
             ],
-            "time": "2018-09-02T14:59:54+00:00"
+            "time": "2018-05-27T12:42:05+00:00"
         },
         {
             "name": "yii2tech/ar-softdelete",
