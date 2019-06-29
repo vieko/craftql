@@ -211,8 +211,6 @@ class Query extends Schema {
                     $setIds = \Craft::$app->globals->getAllSetIds();
 
                     foreach ($setIds as $id) {
-                        // $set = \Craft::$app->globals->getSetById($id, $siteId);
-                        // $sets[$set->handle] = $set;
                         if ($set = \Craft::$app->globals->getSetById($id, $siteId)) {
                             $sets[$set->handle] = $set;
                         }
