@@ -48,7 +48,7 @@ class GetAssetsFieldSchema
                 foreach ($values as $value) {
                     if (!empty($value['id'])) {
                         $images[] = $value['id'];
-                        continue;
+                        break;
                     }
 
                     $remoteUrl = $value['url'];
