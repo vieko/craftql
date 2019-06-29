@@ -5,7 +5,7 @@ namespace markhuot\CraftQL\Directives;
 use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\Type;
 use GraphQL\Type\Definition\Directive;
-use GraphQL\Type\Definition\DirectiveLocation;
+use GraphQL\Languages\DirectiveLocation;
 use GraphQL\Type\Definition\FieldArgument;
 
 class Date {
